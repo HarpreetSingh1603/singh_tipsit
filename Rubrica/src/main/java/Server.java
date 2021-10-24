@@ -1,6 +1,8 @@
 import java.io.*;
 import java.net.*;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Server
 {
@@ -9,6 +11,7 @@ public class Server
     String stringaRicevuta;
     String stringaModificata;
     BufferedReader inDalClient;
+    BufferedReader textFile;
     BufferedWriter outVersoClient;
     HashMap<String, String> rubrica = new HashMap<String, String>();
     
@@ -37,16 +40,29 @@ public class Server
 
     public void serviClient()
     {
-        rubrica.put("mario", "3209564120");
+        try {
+            textFile = new BufferedReader(new FileReader("text.txt"));
+            
+            String tmp = " ";
+            while(tmp != null){
+                //tmp = textFile.readLine();
+                rubrica.put(tmp = textFile.readLine(), tmp = textFile.readLine());
+            }
+            
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        /*rubrica.put("mario", "3209564120");
         rubrica.put("antonio", "3209553211");
-        rubrica.put("giulia", "3395422613");
+        rubrica.put("giulia", "3395422613");*/
         try
         {
             // rimango in attesa della riga trasnmessa dal client
             System.out.println("benvenuto client, scrivi un nome e ritorno il suo numero di telefono. Attendo ...");
             stringaRicevuta = inDalClient.readLine();
             stringaRicevuta = stringaRicevuta.toLowerCase();
-            //System.out.println("6 ricevuta la stringa dal cliente : "+stringaRicevuta);
             try
             {
                 stringaModificata = rubrica.get(stringaRicevuta);

@@ -35,7 +35,7 @@ public class Client {
     public void comunicaConSever() {
         try                      // leggo una riga
         {
-            System.out.println("inserisci la stringa da trasmettere al server:"+'\n');
+            System.out.println("inserisci il nome da trasmettere al server:"+'\n');
             tastiera = new BufferedReader(new InputStreamReader(System.in));
             stringaUtente = tastiera.readLine();
             // la spedisco al server
