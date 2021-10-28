@@ -36,17 +36,27 @@ public class CalcClient {
         
         System.out.println("Inserisci un'operazione tra due numeri: ");
         operazione = sc.nextLine();
-        StringTokenizer token = new StringTokenizer(operazione, " ");
+        //StringTokenizer token = new StringTokenizer(operazione, "  ");
+        String[] op = operazione.split(" ");
         
-        operando1 = Double.parseDouble(token.nextToken());
-        opCode = Byte.parseByte(token.nextToken());
-        operando2 = Double.parseDouble(token.nextToken());
+        for(String a: op)
+            System.out.println(a);
         
+        operando1 = Double.parseDouble(op[0]);
+        opCode = Byte.parseByte(op[1]);
+        operando2 = Double.parseDouble(op[2]);
         
+        System.out.println(operando1);
+        System.out.println(opCode);
+        System.out.println(operando2);
         
-        //dos.writeDouble(operando1);
+        dos.writeDouble(operando1);
+        dos.writeByte(opCode);
+        dos.writeDouble(operando2);
         
+        System.out.println(dis.readDouble());
         
+        socket.close();
     }
     
 }

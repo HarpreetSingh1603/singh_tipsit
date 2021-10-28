@@ -20,15 +20,19 @@ public class CalcServer {
 
         byte opCode;
         
-        /*if(opCode == "+"){
+        operando1 = dis.readDouble();
+        opCode = dis.readByte();
+        operando2 = dis.readDouble();
+        
+        if(Byte.valueOf("+") == opCode){
             risultato = operando1 + operando2;
-        } else if(opCode == "-"){
+        } else if(opCode == Byte.valueOf("-")){
             risultato = operando1 - operando2;
-        } else if(opCode == "/"){
+        } else if(opCode == Byte.valueOf("/")){
             risultato = operando1 / operando2;
-        } else if(opCode == "*"){
+        } else if(opCode == Byte.valueOf("*")){
             risultato = operando1 * operando2;
-        }*/
+        }
         
         dos.writeDouble(risultato);
         
