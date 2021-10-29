@@ -31,30 +31,25 @@ public class CalcClient {
         DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
         
         double operando1, operando2, risultato;
-        byte opCode;
+        byte[] opCode;
         String operazione;
         
         System.out.println("Inserisci un'operazione tra due numeri: ");
         operazione = sc.nextLine();
-        //StringTokenizer token = new StringTokenizer(operazione, "  ");
         String[] op = operazione.split(" ");
         
-        for(String a: op)
-            System.out.println(a);
-        
         operando1 = Double.parseDouble(op[0]);
-        opCode = Byte.parseByte(op[1]);
+        opCode = op[1].getBytes();
         operando2 = Double.parseDouble(op[2]);
         
-        System.out.println(operando1);
-        System.out.println(opCode);
-        System.out.println(operando2);
-        
         dos.writeDouble(operando1);
-        dos.writeByte(opCode);
+        dos.write(opCode);
         dos.writeDouble(operando2);
         
-        System.out.println(dis.readDouble());
+        risultato = dis.readDouble();
+        dos.flush();
+        
+        System.out.println("risultato = " + risultato);
         
         socket.close();
     }
