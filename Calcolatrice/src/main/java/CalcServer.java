@@ -1,3 +1,4 @@
+
 /**
  *
  * @author studente
@@ -19,25 +20,43 @@ public class CalcServer {
         double risultato = 0;
 
         byte opCode;
-        
+
         operando1 = dis.readDouble();
         opCode = dis.readByte();
         operando2 = dis.readDouble();
-        
-        if(opCode == OpCode.ADD){
+
+        if (opCode == OpCode.ADD) {
             risultato = operando1 + operando2;
-        } else if(opCode == OpCode.SUB){
+        } else if (opCode == OpCode.SUB) {
             risultato = operando1 - operando2;
-        } else if(opCode == OpCode.DIV){
+        } else if (opCode == OpCode.DIV) {
             risultato = operando1 / operando2;
-        } else if(opCode == OpCode.MUL){
+        } else if (opCode == OpCode.MUL) {
             risultato = operando1 * operando2;
         }
-        
+
         dos.writeDouble(risultato);
-        
+
+        while (opCode != OpCode.EXIT) {
+            opCode = dis.readByte();
+            operando1 = dis.readDouble();
+            
+
+            if (opCode == OpCode.ADD) {
+                risultato = risultato + operando1;
+            } else if (opCode == OpCode.SUB) {
+                risultato = risultato - operando1;
+            } else if (opCode == OpCode.DIV) {
+                risultato = risultato / operando1;
+            } else if (opCode == OpCode.MUL) {
+                risultato = risultato * operando1;
+            }
+
+            dos.writeDouble(risultato);
+        }
+
         socket.close();
-        
+
     }
 
 }

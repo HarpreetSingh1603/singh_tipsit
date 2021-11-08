@@ -50,7 +50,27 @@ public class CalcClient {
         dos.writeDouble(operando2);
 
         risultato = dis.readDouble();
+        
         System.out.println("Risultato = " + risultato);
+
+        while (opCode != OpCode.EXIT) {
+            try {
+                input = sc.nextLine();
+                String[] dati = input.strip().split("\\s+");
+                operando1 = Double.parseDouble(dati[1]);
+                opCode = OpCode.getOpCodeForString(dati[0]);
+            } catch (IndexOutOfBoundsException | NumberFormatException e) {
+
+            }
+            dos.writeByte(opCode);
+            dos.writeDouble(operando1);
+            
+
+            risultato = dis.readDouble();
+            System.out.println("Risultato = " + risultato);
+        }
+        
+        socket.close();
     }
 
 }
