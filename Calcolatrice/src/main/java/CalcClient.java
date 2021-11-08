@@ -51,9 +51,10 @@ public class CalcClient {
 
         risultato = dis.readDouble();
         
-        System.out.println("Risultato = " + risultato);
+        
 
         while (opCode != OpCode.EXIT) {
+            System.out.println("Risultato = " + risultato);
             try {
                 input = sc.nextLine();
                 String[] dati = input.strip().split("\\s+");
@@ -67,7 +68,7 @@ public class CalcClient {
             
 
             risultato = dis.readDouble();
-            System.out.println("Risultato = " + risultato);
+
         }
         
         socket.close();
