@@ -11,16 +11,15 @@ public class HttpServer {
         
         try {
             ServerSocket serverSocket = new ServerSocket(8080);
-            
-            Socket client = serverSocket.accept();
-            
-            
-            PrintWriter outVersoClient;
-            outVersoClient = new PrintWriter(client.getOutputStream());
-            
-            outVersoClient.write("Funziona!");
-            outVersoClient.flush();
-            
+            System.out.println("Server partito");
+            for (;;) {
+                System.out.println("Server in attesa");
+                Socket client = serverSocket.accept();
+                
+                ClientHandler clientHandler = new ClientHandler(client);
+                
+                clientHandler.start();
+            }
             
             
         } catch (Exception e) {
