@@ -40,7 +40,7 @@ public class ClientHandler extends Thread {
         resource = "<!DOCTYPE html>\n<html><body><h1>Risorsa</h1></body></html>";
         badResource = "<!DOCTYPE html>\n<html><body><h1>errore</h1></body></html>";
         
-        if(!request.contains("GET")){
+        if(request.contains("GET")){
             outVersoClient.println("HTTP/1.1 200 OK");
             outVersoClient.println("Content-Type: text/html");
             outVersoClient.println("Content-Lenght: " + resource.length());
