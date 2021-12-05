@@ -3,7 +3,11 @@ package app;
 import java.awt.image.BufferedImage;
 import java.net.*;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Base64;
 import javax.imageio.ImageIO;
+import org.apache.commons.io.FileUtils;
 
 public class ClientHandler extends Thread {
     ServerSocket server;
@@ -12,7 +16,8 @@ public class ClientHandler extends Thread {
     String request;
     String resource;
     String badResource;
-    
+    File f;
+    Path path;
     Socket client;
 
     HttpServer utenti = new HttpServer();
@@ -31,14 +36,20 @@ public class ClientHandler extends Thread {
     }
 
     private void comunica() throws Exception {
+        path = new File("/home/studente/Desktop/singh_tipsit/myapp/htdocs/immagine.jpg").toPath();
         
-        BufferedImage bImage = ImageIO.read(new File("/home/studente/Desktop/singh_tipsit/myapp/htdocs/immagine.jpg"));
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        ImageIO.write(bImage, "jpg", bos );
-        byte [] data = bos.toByteArray();
+       /* String type = Files.probeContentType(path);
+        f = new File("/home/studente/Desktop/singh_tipsit/myapp/htdocs/immagine.jpg");
+        byte[] fileContent = FileUtils.readFileToByteArray(new File("/home/studente/Desktop/singh_tipsit/myapp/htdocs/immagine.jpg"));
+        String encodestring;
+        encodestring = Base64.getEncoder().encodeToString(fileContent);
+        
+        System.out.println(encodestring);*/
+        byte[] data = Files.readAllBytes(path);
+        
         
         inDalClient = new BufferedReader(new InputStreamReader(client.getInputStream()));
-
+        
 
         String httpHeader;
         os = client.getOutputStream();
@@ -82,14 +93,18 @@ public class ClientHandler extends Thread {
             System.out.println("Test");
             httpHeader
                     = "HTTP/1.1 200 OK\n\r"
-                    + "Content-Type: image/jpg;Base64\n\r"
-                    + "Content-Lenght: " + data.length
+                    + "Content-Type: image/jpg\n\r"
+                    + "Content-Lenght: " + path.toFile().length()
                     + "\n\r"
-                    + "\n\r"
-                    + data;
+                    + "\n\r";
+            
+            byte[] stringa = httpHeader.getBytes();
+            byte[] bytes = new byte[data.length + stringa.length];
+            System.arraycopy(stringa, 0, bytes, 0, stringa.length);
+            System.arraycopy(data, 0, bytes, stringa.length, data.length);
 
-
-            os.write(httpHeader.getBytes(), 0, httpHeader.length());
+            
+            os.write(bytes);
             os.flush();
         }
         

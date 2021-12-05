@@ -10,7 +10,7 @@ public class HttpServer {
     public void start() {
         
         try {
-            ServerSocket serverSocket = new ServerSocket(5555);
+            ServerSocket serverSocket = new ServerSocket(8080);
             System.out.println("Server partito");
             for (;;) {
                 System.out.println("Server in attesa");
